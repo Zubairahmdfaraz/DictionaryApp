@@ -1,0 +1,115 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dictionary App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+        }
+        .navbar {
+            background-color: #ffffff;
+            color: #fff;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .navbar img {
+            max-height: 250px;
+            margin-right: 20px;
+        }
+        .container {
+            background-color: #ffffff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 400px;
+            text-align: center;
+            margin: 20px auto;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            padding: 10px;
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <img src="{% static 'Dictionary/rectangle-1.png' %}" alt="Dictionary Image" class ="fit-image"> 
+        <nav>
+        </nav>
+    </div>
+    
+    <div class="container">
+        <h1>Dictionary App</h1>
+        <form method="post">
+            {% csrf_token %}
+            <label for="word">Enter a word:</label>
+            <input type="text" name="word" id="word" required>
+            <button type="submit">Search</button>
+        </form>
+        
+        {% if word %}
+        <h2>Word: {{ word }}</h2>
+        
+        {% if meaning %}
+        <h3>Meaning:</h3>
+        <ul>
+            {% for part_of_speech, meanings in meaning.items %}
+            <li>{{ part_of_speech }}: {{ meanings|join:", " }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        
+        {% if synonyms %}
+        <h3>Synonyms:</h3>
+        <ul>
+            {% for synonym in synonyms %}
+            <li>{{ synonym }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        
+        {% if antonyms %}
+        <h3>Antonyms:</h3>
+        <ul>
+            {% for antonym in antonyms %}
+            <li>{{ antonym }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        
+        {% endif %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,4 @@
+Django==4.2.3
+PyDictionary==2.0.1
+
+## Installation
